@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatisimpl.mappers.RecursoMapper">
+
+    <resultMap type="Recurso" id="RecursoResult">
+        <id property="id" column="id_recurso"/>
+        <result property="nombre" column="nombre"/>
+        <result property="habilitado" column="habilitado"/>
+        <result property="ubicacion" column="ubicacion"/>
+        <result property="ejemplares" column="ejemplares"/>
+        <result property="capacidad" column="capacidad"/>
+        <association property="tipo" javaType="TipoRecurso" resultMap="persistence.mybatisimpl.mappers.TipoRecursoMapper.TipoRecursoResult"/>
+        <collection property="horarios" ofType="Horario" resultMap="persistence.mybatisimpl.mappers.HorarioMapper.HorarioResult" columnPrefix="ho_"/>
+    </resultMap>
+
+    <select id="consultarRecursos" resultMap="RecursoResult">
+        select
+        rec.id_recurso,
+        rec.nombre,
+        rec.habilitado,
+        rec.ubicacion,
+        rec.capacidad,
+        rec.ejemplares,
+        tr.tipo,
+<!--        ho.horas,-->
+        ho.estado
+        from public.recursos as rec
+        left join TiposRecursos as tr
+        ON rec.id_tiporecurso = tr.id_tiporecurso
+        left join Horarios as ho
+        ON rec.id_recurso = ho.id_recurso;
+    </select>
+
+    <select id="consultarRecursoPorId" resultMap="RecursoResult">
+        select
+        rec.id_recurso,
+        rec.nombre,
+        rec.habilitado,
+        rec.ubicacion,
+        rec.capacidad,
+        rec.ejemplares
+        from public.recursos as rec
+        where rec.id_recurso = #{id}
+    </select>
+
+    <select id="consultarRecursosPorTipo" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+<!--            ho.horas,-->
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where #{tipo} = tr.id_tiporecurso
+    </select>
+
+    <select id="consultarRecursosPorCapacidad" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+<!--            ho.horas,-->
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where
+            #{cap} = rec.capacidad
+    </select>
+
+    <select id="consultarRecursosPorUbicacion" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+<!--            ho.horas,-->
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where
+            #{ubi} = rec.ubicacion
+    </select>
+    <select id="consultarRecursosTipoCapaUbi" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where
+            #{ubi} = rec.ubicacion AND #{cap} = rec.capacidad AND #{tipo} = tr.id_tiporecurso
+    </select>
+
+    <select id="consultarRecursosTipoUbi" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where
+            #{ubi} = rec.ubicacion AND #{tipo} = tr.id_tiporecurso
+    </select>
+
+    <select id="consultarRecursosTipoCapa" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where
+            #{cap} = rec.capacidad AND #{tipo} = tr.id_tiporecurso
+    </select>
+
+    <select id="consultarRecursosCapaUbi" resultMap="RecursoResult">
+        select
+            rec.id_recurso,
+            rec.nombre,
+            rec.habilitado,
+            rec.ubicacion,
+            rec.capacidad,
+            rec.ejemplares,
+            tr.tipo,
+            ho.estado
+        from public.recursos as rec
+                 left join TiposRecursos as tr
+                           ON rec.id_tiporecurso = tr.id_tiporecurso
+                 left join Horarios as ho
+                           ON rec.id_recurso = ho.id_recurso
+        where
+            #{cap} = rec.capacidad AND #{ubi} = rec.ubicacion
+    </select>
+
+
+
+    <insert parameterType="map" id="registrarRecurso">
+        insert into recursos(id_recurso, nombre, habilitado, ubicacion, ejemplares, capacidad, id_tiporecurso)
+        values (nextval('recursos_id'), #{name}, #{enable}, #{location}, #{item}, #{capacity}, #{type.id})
+    </insert>
+
+    <select id="consultarNombreRecurso" resultMap="RecursoResult">
+        select
+        rec.nombre
+        from public.recursos as rec
+        where #{id} = rec.id_recurso;
+    </select>
+
+    <update id="cambiarRecursoDanado" >
+        update public.recursos
+        set habilitado = 'habilitado'
+        where id_recurso = #{idRecurso}
+    </update>
+
+    <update id="cambiarRecursoHabilitado" >
+        update public.recursos
+        set habilitado = 'dañado'
+        where id_recurso = #{idRecurso}
+    </update>
+
+</mapper>

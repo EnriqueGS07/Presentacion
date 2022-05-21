@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:head>
+    <meta charset="UTF-8" />
+    <title>
+        <ui:insert name="title">Recursos biblioteca</ui:insert>
+    </title><title>Schedule Example</title>
+    <link href="./resources/style.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <div id = "header" >
+        <h:graphicImage id="header_logo" library="imagenes" name="logo-ecijg.width-380.png"/>
+        <h:outputText id = "header_text" class = "text" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/>
+    </div>
+    <h:form class="formulario">
+        <p:growl id="messages" showDetail="true"/>
+        <h:panelGrid columnClasses="value">
+            <p:schedule id="schedule" value="#{calendarioBean.consultar()}" widgetVar="myschedule"
+                        rightHeaderTemplate="agendaDay,agendaWeek,month,listYear"
+                        timeZone="ZoneId.systemDefault()" clientTimeZone="local" draggable="false" style="background:#ffffff;">
+
+                <p:ajax event="eventSelect" listener="#{calendarioBean.onEventSelect}" update="eventDetails1"
+                        oncomplete="PF('eventDetails1').show();" />
+
+                <p:ajax event="eventMove" listener="#{calendarioBean.onEventMove}" update="messages"/>
+
+                <p:ajax event="eventResize" listener="#{calendarioBean.onEventResize}" update="messages"/>
+
+            </p:schedule>
+        </h:panelGrid>
+
+        <p:dialog widgetVar="eventDetails1" header="Información de la reserva" showEffect="clip" hideEffect="clip"
+                  modal="true">
+
+            <h:panelGrid id="eventDetails1" border="1" columns="2" styleClass="table-style">
+                <h:outputLabel for="it-nombre-1" value="Id Recurso: " />
+                <h:outputLabel id="it-nombre-1" value="  #{calendarioBean.eventId}"/>
+
+
+                <h:outputLabel for="it-FechaInicio-1" value="Fecha Inicio: " />
+                <h:outputLabel id="it-FechaInicio-1" value = "#{calendarioBean.getInicio()}" />
+
+                <h:outputLabel for="it-FechaFin-1" value="Fecha Fin: " />
+                <h:outputLabel id="it-FechaFin-1" value = "#{calendarioBean.getFin()}" />
+
+                <h:outputLabel for="it-recurso-1" value="Recurso solicitado: " />
+                <h:outputLabel id="it-recurso-1" value = "#{calendarioBean.nombreR}" />
+
+                <h:outputLabel for="it-solicitud-1" value="Fecha solicitado: " />
+                <h:outputLabel id="it-solicitud-1" value = "#{calendarioBean.solicitud}" />
+            </h:panelGrid>
+
+        </p:dialog>
+        <h:commandButton value="Atras" action="prueba?recursosBiblioteca-redirect = true" style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" />
+        <h:form>
+            <h:commandButton style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" value="Cerrar Sesión" actionListener="#{loginBean.logOut()}" />
+        </h:form>
+    </h:form>
+
+</h:body>
+</html>

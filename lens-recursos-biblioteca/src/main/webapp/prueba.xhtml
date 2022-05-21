@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <title>
+        <ui:insert name="title">Recursos biblioteca</ui:insert>
+    </title>
+    <link href="./resources/style.css" rel="stylesheet"/>
+</h:head>
+<!--<style>-->
+<!--.ui-panelgrid td {-->
+<!--    padding: 2px 30px ;-->
+<!--}-->
+<!--</style>-->
+<h:body>
+    <p:messages id="messages" showDetail="true" closable="ture">
+        <p:autoUpdate/>
+    </p:messages>
+    <div id = "header" >
+        <h:graphicImage id="header_logo" library="imagenes" name="logo-ecijg.width-380.png"/>
+        <h:outputText id = "header_text" class = "text" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/>
+    </div>
+
+    <div class="container" >
+        <h:form id="Recursos">
+            <h:commandButton value="Atras" action="#{consultarRecursosBean.redirect}" style="color:#ffffff;
+                background-color:#990000;font-size:120%; position:relative; top:50px" />
+            <br/>
+            <br/>
+            <div>
+                <h:commandButton style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" value="Cerrar Sesión" actionListener="#{loginBean.logOut()}" />
+            </div>
+            <p:panel header="filtros" style="text-align: center" name="panel1" id="panel1">
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr">
+                    <div>
+                        <h4>Capacidad del recurso</h4>
+                        <center><h:selectOneMenu value="#{consultarRecursosBean.capacidad}">
+                            <f:selectItem itemLabel="Seleccione Capacidad" itemValue="-1"/>
+                            <f:selectItem itemValue="1" itemLabel="1" />
+                            <f:selectItem itemValue="2" itemLabel="2" />
+                            <f:selectItem itemValue="3" itemLabel="3" />
+                            <f:selectItem itemValue="4" itemLabel="4" />
+                            <f:selectItem itemValue="5" itemLabel="5" />
+                        </h:selectOneMenu></center>
+                    </div>
+                    <div>
+                        <h4>Tipo del recurso</h4>
+                        <center><h:selectOneMenu value="#{consultarRecursosBean.tipo}">
+                            <f:selectItem itemLabel="Seleccione Tipo" itemValue="-1"/>
+                            <f:selectItem itemValue="1" itemLabel="Libro" />
+                            <f:selectItem itemValue="2" itemLabel="Sala de estudio" />
+                            <f:selectItem itemValue="3" itemLabel="Equipo de computo" />
+                            <f:selectItem itemValue="4" itemLabel="Equipo audiovisual" />
+                        </h:selectOneMenu></center>
+                    </div>
+                    <div>
+                        <h4>Ubicacion del recurso</h4>
+                        <center><h:inputText value="#{consultarRecursosBean.ubicacion}">
+                        </h:inputText></center>
+                    </div>
+                    <div>
+                        <p:commandButton  value="Buscar" action="#{consultarRecursosBean.filtrarLosRecursos()}" update="recursos" style="color:#ffffff; background-color:#990000; width:50%; height:50%; font-size:120% " />
+                    </div>
+                </div>
+            </p:panel>
+
+            <p:panel header="Recursos disponibles" style="text-align: center" name="panel2" id="panel2">
+                <p:dataTable  id="recursos" var="recurso" value="#{consultarRecursosBean.filtrarLosRecursos()}" selectionMode="single" selection="#{consultarRecursosBean.recurso}" rowKey="#{recurso.nombre}" rows="8" paginator="true"
+                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records" style="text-align: left; align: center">
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{recurso.nombre}" />
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{recurso.tipo.getNombre()}" />
+                    </p:column>
+                    <p:column headerText="Capacidad">
+                        <h:outputText value="#{recurso.capacidad}" />
+                    </p:column>
+                    <p:column headerText="Ubicación">
+                        <h:outputText value="#{recurso.ubicacion}" />
+                    </p:column>
+                    <p:column headerText="Ubicación">
+                        <h:outputText value="#{recurso.habilitado}" />
+                    </p:column>
+                </p:dataTable>
+                <c:if test="#{consultarRecursosBean.admin()}">
+                    <h:commandButton value="Cambiar estado" action="#{consultarRecursosBean.cambiarEstado}" style="margin-top: 10px"/>
+                </c:if>
+                <h:commandButton value="Ver reservas" action="calendar?faces-redirect = true" style="margin-top: 10px"/>
+                <c:if test="#{consultarRecursosBean.logeado()}">
+                    <h:commandButton id="select" value="Reservar" action="#{consultarHorariosBean.loadHorarios(consultarRecursosBean.recurso.id)}" style="margin-top: 10px"/>
+                </c:if>
+
+
+            </p:panel>
+        </h:form>
+    </div>
+</h:body>
+</html>

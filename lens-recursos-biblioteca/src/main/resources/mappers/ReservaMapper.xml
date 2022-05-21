@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatisimpl.mappers.ReservaMapper">
+
+    <resultMap type="Reserva" id="ReservaResult">
+        <id property="id" column="id_reserva"/>
+        <result property="inicio" column="inicio"/>
+        <result property="fin" column="fin"/>
+        <result property="recurrente" column="recurrente"/>
+        <result property="estado" column="estado"/>
+        <result property="solicitud" column="solicitud"/>
+        <result property="idUsuario" column="id_usuario"/>
+        <result property="idRecurso" column="id_recurso"/>
+        <association property="recurso" javaType="Recurso" resultMap="persistence.mybatisimpl.mappers.RecursoMapper.RecursoResult"/>
+        <association property="usuario" javaType="Usuario" resultMap="persistence.mybatisimpl.mappers.UsuarioMapper.UsuarioResult"/>
+        <collection property="reservaRecurrentes" ofType="ReservaRecurrente" resultMap="persistence.mybatisimpl.mappers.ReservaRecurrenteMapper.ReservaRecurrenteResult"/>
+    </resultMap>
+
+    <insert parameterType="map" id="reservarRecurso">
+        insert into reservas(id_reserva, id_usuario, id_recurso, inicio, fin, recurrente, estado,h_ini,h_fin, solicitud)
+        values (nextval('reservas_id'), #{id_usuario}, #{id_recurso}, #{inicio}, #{fin}, #{recurrente}, #{estado},#{h_ini},#{h_fin}, #{solicitud})
+    </insert>
+
+    <select id="consultarReservas" resultMap="ReservaResult">
+        select
+        res.id_reserva,
+        res.id_recurso,
+        res.solicitud,
+        res.inicio,
+        res.fin,
+        usu.nombre,
+        rec.nombre
+        from public.reservas as res
+        left join usuarios as usu
+        ON res.id_usuario = usu.id_usuarios
+        left join recursos as rec
+        ON rec.id_recurso = res.id_recurso;
+    </select>
+    <select id="consultarReservasActivas" resultMap="ReservaResult">
+        select
+        res.id_reserva,
+        res.estado,
+        res.solicitud,
+        res.inicio,
+        res.fin,
+        rec.nombre
+        from public.reservas as res
+        left join recursos as rec
+        ON rec.id_recurso = res.id_recurso
+        WHERE res.estado = 'activo' AND res.id_usuario = #{id}
+    </select>
+
+    <select id="consultarReservasCanceladas" resultMap="ReservaResult">
+        select
+            res.id_reserva,
+            res.estado,
+            res.solicitud,
+            res.inicio,
+            res.fin,
+            rec.nombre
+        from public.reservas as res
+        left join recursos as rec
+        ON rec.id_recurso = res.id_recurso
+        WHERE res.estado = 'cancelada' AND res.id_usuario = #{id}
+    </select>
+
+    <select id="consultarReservasPasadas" resultMap="ReservaResult">
+        select
+        res.id_reserva,
+        res.estado,
+        res.solicitud,
+        res.inicio,
+        res.fin,
+        rec.nombre
+        from public.reservas as res
+        left join recursos as rec
+        ON rec.id_recurso = res.id_recurso
+        WHERE res.estado = 'finalizada' AND res.id_usuario = #{id}
+    </select>
+
+    <select id="consultarReservaExtendida" resultMap="ReservaResult">
+        select
+            res.id_reserva,
+            res.id_recurso,
+            res.id_usuario,
+            res.solicitud,
+            res.inicio,
+            res.fin,
+            res.recurrente
+        from public.reservas as res
+        where res.id_reserva = #{id}
+    </select>
+
+    <select id="consultarReservasPorUsuario" resultMap="ReservaResult">
+        select
+        res.id_reserva,
+        res.id_recurso,
+        res.solicitud,
+        res.inicio,
+        res.fin,
+        usu.nombre,
+        rec.nombre
+        from public.reservas as res
+        left join usuarios as usu
+        ON res.id_usuario = usu.id_usuarios
+        left join recursos as rec
+        ON rec.id_recurso = res.id_recurso
+        where res.id_usuario = #{id};
+    </select>
+    <update id="cancelarReserva" >
+        update public.reservas
+        set estado = 'cancelada'
+        where id_reserva = #{idReserva}
+    </update>
+
+
+
+
+</mapper>

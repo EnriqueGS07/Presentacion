@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>
+            <ui:insert name="title">Recursos biblioteca</ui:insert>
+        </title>
+        <link href="./resources/style.css" rel="stylesheet"/>
+    </h:head>
+
+    <h:body>
+
+        <div id = "header" >
+            <h:graphicImage id="header_logo" library="imagenes" name="logo-ecijg.width-380.png"/>
+            <h:outputText id = "header_text" class = "text" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/>
+        </div>
+
+        <div class="box_container">
+            <h3 class="text">Bienvenido, Administrador</h3>
+            <div><h:form>
+                <p:panelMenu class="menu">
+                    <p:submenu label="Recursos">
+                        <p:menuitem value="Agregar recurso" action="agregarRecurso?faces-redirect = true"/>
+                        <p:menuitem value="Consultar recurso" action="prueba?faces-redirect = true"/>
+                    </p:submenu>
+                </p:panelMenu>
+            </h:form></div>
+            <div><h:form>
+                <h:commandButton class="button" value="Cerrar Sesión" actionListener="#{loginBean.logOut()}" />
+            </h:form></div>
+
+        </div>
+
+    </h:body>
+</html>

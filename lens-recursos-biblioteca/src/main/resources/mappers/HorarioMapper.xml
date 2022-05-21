@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatisimpl.mappers.HorarioMapper">
+
+    <resultMap type="Horario" id="HorarioResult">
+        <id property="id" column="id_horario"/>
+        <result property="id" column="id_recurso"/>
+        <result property="estado" column="estado"/>
+        <result property="hora_ini" column="hora_ini"/>
+        <result property="hora_fin" column="hora_fin"/>
+        <association property="idRecurso" javaType="Recurso" resultMap="persistence.mybatisimpl.mappers.RecursoMapper.RecursoResult"/>
+    </resultMap>
+
+    <select id="consultarHorario" resultMap="HorarioResult">
+        select
+            hor.hora_ini,
+            hor.hora_fin
+        from public.horarios as hor
+        where (hor.estado = 'disponible') and (hor.id_recurso = #{element})
+        order by hor.hora_ini
+    </select>
+
+    <insert parameterType="map" id="guardar">
+        insert into horarios(id_horario, id_recurso, estado, hora_ini, hora_fin)
+        values (nextval('horarios_id'), (select max(id_recurso) from recursos), 'disponible', #{hora_ini}, #{hora_fin});
+    </insert>
+
+</mapper>

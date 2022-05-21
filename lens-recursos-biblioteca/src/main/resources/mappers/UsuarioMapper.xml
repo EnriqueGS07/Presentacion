@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="persistence.mybatisimpl.mappers.UsuarioMapper">
+
+    <resultMap type="Usuario" id="UsuarioResult">
+        <id property="id" column="id_usuarios"/>
+        <result property="tipoUsuario" column="tipo"/>
+        <result property="nombre" column="nombre"/>
+        <result property="programa" column="programa"/>
+        <result property="correo" column="correo"/>
+        <result property="contrasena" column="contraseña"/>
+    </resultMap>
+
+    <select parameterType="map" id="buscarUsuarioxCorreo" resultMap="UsuarioResult">
+        select
+        u.id_usuarios, u.tipo, u.nombre, u.programa, u.correo, u.contraseña
+
+        from usuarios as u where u.correo = #{Correo};
+    </select>
+
+    <select parameterType="map" id="consultarUsuarioPorId" resultMap="UsuarioResult">
+        select
+        u.id_usuarios, u.tipo, u.nombre, u.programa, u.correo, u.contraseña
+
+        from usuarios as u where u.id_usuarios = #{id};
+    </select>
+
+</mapper>

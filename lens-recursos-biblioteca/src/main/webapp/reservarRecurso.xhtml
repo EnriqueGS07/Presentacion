@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:o="http://omnifaces.org/ui"
+        xmlns:of="http://omnifaces.org/functions">
+<h:head>
+    <title>
+        <ui:insert name="title">Recursos biblioteca</ui:insert>
+    </title>
+    <link href="./resources/style.css" rel="stylesheet"/>
+</h:head>
+
+<h:body>
+
+    <div id = "header" >
+        <h:graphicImage id="header_logo" library="imagenes" name="logo-ecijg.width-380.png"/>
+        <h:outputText id = "header_text" class = "text" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/>
+    </div>
+    <p:messages id="messages" showDetail="true" closable="ture">
+        <p:autoUpdate/>
+    </p:messages>
+
+    <div class = "box_container" id="agregarRecursosBox">
+        <h:form>
+        <div><h:commandButton value="Atras" action="prueba?recursosBiblioteca-redirect = true" class="button"/></div>
+            <br/>
+        <h2>Reservar recurso: #{consultarRecursosBean.recurso.nombre}</h2>
+        <h3>Fecha inicio</h3>
+    <div><p:calendar value="#{reservarRecursoBean.inicio}" pattern="MM-dd-yyyy"/></div>
+        <h3>Fecha Fin</h3>
+    <div><p:calendar value="#{reservarRecursoBean.fin}" pattern="MM-dd-yyyy"/></div>
+    <h3>Hora Inicio</h3>
+    <div><h:outputText value="#{consultarHorariosBean.horario.hora_ini}" /></div>
+    <h3>Hora Fin</h3>
+    <div><h:outputText value="#{consultarHorariosBean.horario.hora_fin}" /></div>
+        <h3>Recurrente</h3>
+    <div><h:selectOneMenu value="#{reservarRecursoBean.recurrente}" class="form-control" styleClass="menu">
+            <f:selectItem itemValue="true" itemLabel="Recurrente" />
+            <f:selectItem itemValue="false" itemLabel="No recurrente" />
+        </h:selectOneMenu>
+    </div>
+        <br/>
+    <div><h:outputText value = "Fecha solicitud: " style="font-size:150%; font-type:solid"/><h:outputText value="#{session.lastAccessedTime}" style="font-size:150%; font-type:solid">
+            <f:convertDateTime pattern="MM/dd/yyyy" type="date" />
+        </h:outputText></div>
+            <br/>
+    <div><h:commandButton value="Reservar" actionListener="#{reservarRecursoBean.setearHoras(consultarHorariosBean.horario.hora_ini,consultarHorariosBean.horario.hora_fin)}" action="#{reservarRecursoBean.reservarRecurso(consultarRecursosBean.recurso.id)}" class="button" /></div>
+        </h:form>
+    </div>
+
+</h:body>
+
+</html>

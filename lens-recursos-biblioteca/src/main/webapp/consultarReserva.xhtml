@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+        <title>
+            <ui:insert name="title">Recursos biblioteca</ui:insert>
+        </title>
+        <link href="./resources/style.css" rel="stylesheet"/>
+</h:head>
+
+<h:body>
+    <div id = "header" >
+        <h:graphicImage id="header_logo" library="imagenes" name="logo-ecijg.width-380.png"/>
+        <h:outputText id = "header_text" class = "text" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/>
+    </div>
+
+    <h:form>
+        <p:messages id="messages" showDetail="true" closable="ture">
+            <p:autoUpdate/>
+        </p:messages>
+        <div>
+            <h:commandButton value="Atras" action="comunidad?recursosBiblioteca-redirect = true" style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" />
+            <div><h:form>
+                <h:commandButton style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" value="Cerrar Sesión" actionListener="#{loginBean.logOut()}" />
+            </h:form></div>
+            <div class="box_container">
+                <center><h1 class="titulo">Consultar Reserva</h1></center>
+                <div>
+                    <center><h3>Nombre recurso:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.nombreRecurso}" class="text" /></center>
+                </div>
+                <div>
+                    <center><h3>Fecha solicitado:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.solicitud}" class="text" /></center>
+                </div>
+                <div>
+                    <center><h3>Solicitado desde:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.inicio}" class="text" /></center>
+                </div>
+                <div>
+                    <center><h3>Solicitado hasta:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.fin}" class="text" /></center>
+                </div>
+                <div>
+                    <center><h3>Nombre del usuario:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.usuario}" class="text" /></center>
+                </div>
+                <div>
+                    <center><h3>Programa del usuario:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.programa}" class="text" /></center>
+                </div>
+                <div>
+                    <center><h3>Es recurrente:</h3></center>
+                    <center><h:outputText value="#{consultarReservaBean.reserva.recurrente}" class="text" /></center>
+                    <h:commandButton value = "Cancelar Reserva" class = "button" action="#{consultarReservaBean.cancelarReserva(consultarReservaBean.reserva.idReserva)}" />
+                </div>
+
+            </div>
+        </div>
+    </h:form>
+
+</h:body>
+
+</html>

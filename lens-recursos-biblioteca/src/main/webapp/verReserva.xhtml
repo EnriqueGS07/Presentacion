@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+xhtml de la pagina principal de recursos biblioteca en donde se redireccionara a las distintas paginas
+-->
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:f = "http://java.sun.com/jsf/core">
+<h:head>
+    <title>
+        <ui:insert name="title">Recursos biblioteca</ui:insert>
+    </title>
+    <link href="./resources/style.css" rel="stylesheet"/>
+</h:head>
+
+<h:body>
+    <div id = "header" >
+        <h:graphicImage id="header_logo" library="imagenes" name="logo-ecijg.width-380.png"/>
+        <h:outputText id = "header_text" class = "text" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/>
+    </div>
+    <h:form><h:commandButton value="Atras" action="comunidad?recursosBiblioteca-redirect = true" style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" /></h:form>
+    <br/>
+    <div><h:form>
+        <h:commandButton style="color:#ffffff;
+            background-color:#990000;font-size:120%; position:relative; top:50px" value="Cerrar Sesión" actionListener="#{loginBean.logOut()}" />
+    </h:form></div>
+    <div class = "box_container">
+        <h:form>
+            <h:commandButton styleClass="button" value="Reservas Activas" actionListener="#{visualizarReservaBean.consAct()}" />
+            <h:commandButton styleClass="button" value="Reservas Canceladas" action="#{visualizarReservaBean.consCanc()}"/>
+            <h:commandButton styleClass="button" value="Reservas Antiguas" action="#{visualizarReservaBean.consPas()}"/>
+        </h:form>
+        <h:form>
+        <h:dataTable value="#{visualizarReservaBean.reservas}" var="reserva" border="4" style ="background-color:#ebeff4;" >
+            <p:column style = "border: 1px solid black; border-collapse: collapse; width:60% ; padding-left: 30px;padding-right: 30px; background-color:#cce6ff" >
+                <f:facet name = "header">
+                    <h:outputText value="Inicio" style="background-color:#990000; color:#ffffff; font-size:120%;"/>
+                </f:facet>
+                <!--                        {recurso.nombre}-->
+                <h:outputText value = "#{reserva.inicio}"/>
+            </p:column>
+            <p:column style = "border: 1px solid black; border-collapse: collapse; width:40%; padding-left: 8px; padding-right: 8px">
+                <f:facet name = "header">
+                    <h:outputText value="Fin" style="background-color:#990000; color:#ffffff; font-size:120%"/>
+                </f:facet>
+                <!--                        {recurso.tipo}-->
+                <h:outputText value = "#{reserva.fin}"/>
+            </p:column>
+            <p:column style = "border: 1px solid black; border-collapse: collapse; width:40% ; padding-left: 5px; padding-right: 5px ; background-color:#cce6ff">
+                <f:facet name = "header">
+                    <h:outputText value="Fecha de solicitud" style="background-color:#990000; color:#ffffff; font-size:120%"/>
+                </f:facet>
+                <!--                        {recurso.capacidad}-->
+                <h:outputText value = "#{reserva.solicitud}"/>
+            </p:column>
+            <p:column style = "border: 1px solid black; border-collapse: collapse; width:40% ; padding-left: 15px ; padding-right: 15px">
+                <f:facet name = "header" >
+                    <h:outputText value="nombre del recurso" style="background-color:#990000; color:#ffffff; font-size:120%"/>
+                </f:facet>
+                <!--                        {recurso.ubicacion}-->
+                <h:outputText value = "#{reserva.recurso.nombre}"/>
+            </p:column >
+            <p:column style = "border: 1px solid black; border-collapse: collapse; width:40% ; padding-left: 15px ; padding-right: 15px">
+                <h:commandButton value ="Detalles" action="#{consultarReservaBean.consultaLoad(reserva.id)}"/>
+            </p:column>
+        </h:dataTable>
+        </h:form>
+    </div>
+
+
+</h:body>
+</html>

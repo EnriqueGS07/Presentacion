@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+xhtml de la pagina principal de recursos biblioteca en donde se redireccionara a las distintas paginas
+-->
+<html style = "background-color:#ffffff"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title><ui:insert name="title">Recursos biblioteca</ui:insert></title>
+    <style type="text/css">
+        body {
+            background-image:url('./resources/imagenes/fondoconsulta.jpg');
+            background-repeat: no-repeat;
+             background-attachment: fixed;
+            background-size: 100% 120%;
+        }
+    </style>
+
+</head>
+
+<h:body>
+    <div style = "background-color:#990000" >
+        <center><h:outputText style = "color:#ffffff;font-size:220%;font-family:sans-serif" value = "Escuela Colombiana de ingieneria Julio Garavito: Recursos de biblioteca"/></center>
+    </div>
+    <div style = "display:grid; grid-template-columns: 1fr 10fr 1fr; grid-gap: 40px">
+        <div>
+            <h:graphicImage library="imagenes" name="izquierdo.png" height = "105%"/>
+        </div>
+    </div>
+    <!-- placeholder del boton consultar recurso-->
+    <h:form>
+        <div>
+            <h:commandButton action="consultarRecurso" value="Consultar Recurso"/>
+        </div>
+    </h:form>
+</h:body>
+
+
+</html>
