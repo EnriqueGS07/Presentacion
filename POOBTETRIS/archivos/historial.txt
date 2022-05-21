@@ -1,0 +1,7 @@
+Julia 3 0 1
+Player 96 80 1
+Player 96 240 1
+Player 40 0 1
+Yesid 3 0 1
+orduz 14 0 1
+yesid 14 0 1
