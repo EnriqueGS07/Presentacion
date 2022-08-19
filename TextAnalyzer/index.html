@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text analyzer</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Pattaya&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Uchen&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="img/iconText.png">
+</head>
+<body>
+    <div id="header">
+        <div class="container"><p>By: Enrique Gonzalez</p></div>
+        <div class="container"><h1>Text Analyzer</h1></div>
+        <div class="container"><button id="darkmode" data-bind="event:{click:darkmode}"><img src="img/lightMode.png"/></button></div>
+    </div>
+    
+    
+    <div id="main" class="container">
+        <textarea spellcheck="true" rows = 20 cols="100"  autofocus="on" data-bind="event: {input:showValores}" placeholder="Inserte aqui el texto que desea analizar"></textarea>
+        <div class="info-repetidas">
+        </div>
+    </div>
+    <div id="info" class="container">
+        <h3 id="num-palabras">Numero de palabras: 0</h3>
+        <div class="container">
+            <select name="idiomas">
+                <option value="Español">Español</option>
+                <option value="Ingles">Ingles</option>
+                <option value="Frances">Frances</option>
+                <option value="Italiano">Italiano</option>
+            </select>
+        </div>
+        <h3 id="num-letras">Numero de letras: 0</h3>
+    </div>
+    <div id="botones" class="container">
+        <div class="container-ch"><input id="check-ortografia" type="checkbox" data-bind="event: {input:toggleCorreccion}" checked="true" > Corregir ortografia</input></div>
+        <div class="container-ch"><button id="mostrar-repetidas" data-bind="event: {click:toggleEditar}"> Marcar palabras repetidas</button></div>
+        <div class="container"><button id="limpiar" data-bind="click: limpiar">Limpiar</button></div>
+    </div>
+    <script src="js/lib/jquery-3.6.0.js"></script>
+    <script src="js/lib/knockout-3.5.1.js"></script>
+    <script src="js/src/funcionalidad.js"></script>
+    <script src="js/src/App.js"></script>
+    
+</body>
+</html>
