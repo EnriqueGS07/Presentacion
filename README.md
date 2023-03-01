@@ -9,3 +9,6 @@ Aqui podemos encontrar los proyectos que he realizado a lo largo de  mi carrera,
 
 ### Text Analyzer
 - Este proyecto fue realizado con el proposito de mejorar mis habilidades en el front-end, fue realizado con HTML, CSS y JavaScript, en este podemos analyzar diferentes caracteristicas de un texto como numero de palabras, numero de letras, errores de ortografia y palabras repetidas para mejorar la calidad de este.
+
+### Pangea OP
+- Este es un juego de tipo clicker el cual estaba construido en el back con una api en spring boot en la cual se guardaban todos los datos de los jugadores y de las naciones que se debian conquistar para ser el ganador, en el front funciona con html, css y JavaScript, el mapa del juego se actualizaba en tiempo real usando Java Stomp Client y se controlaron desde el back los problemas de concurrencia como lo pueden ser los deadlocks.
